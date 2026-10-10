@@ -151,7 +151,8 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
                   title={`${scene.name} (${scene.role}) - ${scene.duration}s`}
                 >
                   <span className="text-[9px] sm:text-[10px] font-mono font-semibold uppercase text-zinc-300 truncate pointer-events-none">
-                    {idx + 1}. {scene.role}
+                    <span className="hidden sm:inline">{idx + 1}. {scene.role}</span>
+                    <span className="sm:hidden">{idx + 1}</span>
                   </span>
                   <span className="text-[9px] font-mono text-zinc-400 hidden lg:inline">
                     {scene.duration}s
@@ -191,11 +192,11 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
         </div>
       </div>
 
-      {/* Main Transport Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3">
-        {/* Left: Timecode and Scene Quick Info */}
-        <div className="flex items-center justify-between sm:justify-start w-full sm:w-auto gap-2">
-          <div className="font-mono text-xs tracking-wider bg-zinc-950 px-2.5 py-1.5 rounded-lg border border-white/[0.08] text-zinc-300 shrink-0">
+      {/* Main Transport Bar - Totalmente responsivo para mobile e desktop */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
+        {/* Linha 1 no mobile / Esquerda no desktop: Timecode e Indicador de Cena */}
+        <div className="flex items-center justify-between sm:justify-start w-full sm:w-auto gap-1.5 sm:gap-2">
+          <div className="font-mono text-[11px] sm:text-xs tracking-wider bg-zinc-950 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg border border-white/[0.08] text-zinc-300 shrink-0">
             <span className="text-white font-bold">{formatTimecode(currentTime)}</span>
             <span className="text-zinc-600 mx-1">/</span>
             <span className="text-zinc-400">{formatTimecode(totalDuration)}</span>
@@ -204,7 +205,7 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
           {showreel && showreel.scenes[activeSceneIndex] && (
             <button
               onClick={() => onOpenSceneInspector?.(activeSceneIndex)}
-              className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-300 bg-zinc-900 hover:bg-zinc-800 px-2.5 py-1.5 rounded-lg border border-white/[0.08] transition-all hover:border-white/[0.2] truncate max-w-[170px] sm:max-w-[200px]"
+              className="inline-flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-mono text-zinc-300 bg-zinc-900 hover:bg-zinc-800 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg border border-white/[0.08] transition-all hover:border-white/[0.2] truncate max-w-[150px] xs:max-w-[190px] sm:max-w-[210px]"
               title="Clique para inspecionar / editar o código desta cena"
             >
               <span className="text-zinc-500 shrink-0">Cena {activeSceneIndex + 1}:</span>
@@ -215,95 +216,96 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
           )}
         </div>
 
-        {/* Center: Playback Transport Buttons */}
-        <div className="flex items-center justify-center gap-1.5 sm:gap-2">
-          <button
-            onClick={onPrevScene}
-            className="p-2 sm:p-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/[0.08] transition-all active:scale-95"
-            title="Cena anterior"
-          >
-            <SkipBack className="w-4 h-4" />
-          </button>
-
-          {onStepFrame && (
+        {/* Linha 2 no mobile / Centro + Direita no desktop: Controles unificados */}
+        <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-1.5 sm:gap-3">
+          {/* Botões Centrais de Reprodução */}
+          <div className="flex items-center justify-center gap-1 sm:gap-1.5">
             <button
-              onClick={() => onStepFrame(-1)}
-              className="hidden sm:flex p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/[0.08] transition-all active:scale-95"
-              title="Voltar 1 frame (←)"
+              onClick={onPrevScene}
+              className="p-1.5 sm:p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/[0.08] transition-all active:scale-95"
+              title="Cena anterior"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <SkipBack className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
-          )}
 
-          <button
-            onClick={onTogglePlay}
-            className="p-2 sm:p-2.5 rounded-lg bg-white hover:bg-zinc-200 text-black font-bold shadow-sm transition-all active:scale-95"
-            title={isPlaying ? 'Pausar (Espaço)' : 'Reproduzir (Espaço)'}
-          >
-            {isPlaying ? (
-              <Pause className="w-4 h-4 fill-current" />
-            ) : (
-              <Play className="w-4 h-4 fill-current translate-x-0.5" />
+            {onStepFrame && (
+              <button
+                onClick={() => onStepFrame(-1)}
+                className="hidden sm:flex p-1.5 sm:p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/[0.08] transition-all active:scale-95"
+                title="Voltar 1 frame (←)"
+              >
+                <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </button>
             )}
-          </button>
 
-          {onStepFrame && (
             <button
-              onClick={() => onStepFrame(1)}
-              className="hidden sm:flex p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/[0.08] transition-all active:scale-95"
-              title="Avançar 1 frame (→)"
+              onClick={onTogglePlay}
+              className="p-1.5 sm:p-2 px-2.5 sm:px-3 rounded-lg bg-white hover:bg-zinc-200 text-black font-bold shadow-sm transition-all active:scale-95"
+              title={isPlaying ? 'Pausar (Espaço)' : 'Reproduzir (Espaço)'}
             >
-              <ChevronRight className="w-4 h-4" />
+              {isPlaying ? (
+                <Pause className="w-4 h-4 fill-current" />
+              ) : (
+                <Play className="w-4 h-4 fill-current translate-x-0.5" />
+              )}
             </button>
-          )}
 
-          <button
-            onClick={onNextScene}
-            className="p-2 sm:p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 transition-all active:scale-95"
-            title="Próxima cena"
-          >
-            <SkipForward className="w-4 h-4" />
-          </button>
+            {onStepFrame && (
+              <button
+                onClick={() => onStepFrame(1)}
+                className="hidden sm:flex p-1.5 sm:p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/[0.08] transition-all active:scale-95"
+                title="Avançar 1 frame (→)"
+              >
+                <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </button>
+            )}
 
-          <button
-            onClick={() => onSeek(0)}
-            className="p-2 sm:p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-800 transition-all active:scale-95"
-            title="Reiniciar timeline"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Right: Loop & Speed toggles */}
-        <div className="flex items-center justify-end w-full sm:w-auto gap-2">
-          {/* Loop toggle */}
-          <button
-            onClick={onToggleLoop}
-            className={`px-2.5 py-1.5 rounded-xl border text-xs font-mono transition-all flex items-center gap-1.5 ${
-              loop
-                ? 'bg-cyan-950/60 border-cyan-500/40 text-cyan-300'
-                : 'bg-zinc-900 border-zinc-800 text-zinc-500 hover:text-zinc-300'
-            }`}
-            title="Repetir em loop"
-          >
-            <Repeat className="w-3.5 h-3.5" />
-            <span>LOOP</span>
-          </button>
-
-          {/* Playback Speed */}
-          <div className="flex items-center gap-1 bg-zinc-900 border border-zinc-800 rounded-xl px-2 py-1 text-xs font-mono text-zinc-300">
-            <Gauge className="w-3.5 h-3.5 text-zinc-400" />
-            <select
-              value={playbackSpeed}
-              onChange={(e) => onChangeSpeed(Number(e.target.value))}
-              className="bg-transparent border-none text-zinc-300 focus:outline-none cursor-pointer text-xs"
-              title="Velocidade de reprodução"
+            <button
+              onClick={onNextScene}
+              className="p-1.5 sm:p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/[0.08] transition-all active:scale-95"
+              title="Próxima cena"
             >
-              <option value={0.5} className="bg-zinc-900 text-white">0.5x</option>
-              <option value={1} className="bg-zinc-900 text-white">1.0x</option>
-              <option value={1.5} className="bg-zinc-900 text-white">1.5x</option>
-              <option value={2} className="bg-zinc-900 text-white">2.0x</option>
-            </select>
+              <SkipForward className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </button>
+
+            <button
+              onClick={() => onSeek(0)}
+              className="p-1.5 sm:p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-white/[0.08] transition-all active:scale-95"
+              title="Reiniciar timeline"
+            >
+              <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </button>
+          </div>
+
+          {/* Loop & Velocidade */}
+          <div className="flex items-center gap-1 sm:gap-2">
+            <button
+              onClick={onToggleLoop}
+              className={`px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg border text-[11px] sm:text-xs font-mono transition-all flex items-center gap-1 ${
+                loop
+                  ? 'bg-cyan-950/60 border-cyan-500/40 text-cyan-300'
+                  : 'bg-zinc-900 border-white/[0.08] text-zinc-500 hover:text-zinc-300'
+              }`}
+              title="Repetir em loop"
+            >
+              <Repeat className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <span>LOOP</span>
+            </button>
+
+            <div className="flex items-center gap-1 bg-zinc-900 border border-white/[0.08] rounded-lg px-1.5 sm:px-2 py-0.5 sm:py-1 text-[11px] sm:text-xs font-mono text-zinc-300">
+              <Gauge className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-zinc-400" />
+              <select
+                value={playbackSpeed}
+                onChange={(e) => onChangeSpeed(Number(e.target.value))}
+                className="bg-transparent border-none text-zinc-300 focus:outline-none cursor-pointer text-[11px] sm:text-xs"
+                title="Velocidade de reprodução"
+              >
+                <option value={0.5} className="bg-zinc-900 text-white">0.5x</option>
+                <option value={1} className="bg-zinc-900 text-white">1.0x</option>
+                <option value={1.5} className="bg-zinc-900 text-white">1.5x</option>
+                <option value={2} className="bg-zinc-900 text-white">2.0x</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>

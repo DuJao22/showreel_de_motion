@@ -646,27 +646,27 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#09090b] text-[#f4f4f5] flex flex-col font-sans selection:bg-zinc-700 selection:text-white overflow-x-hidden">
-      {/* Studio Top Navbar Minimalista */}
-      <header className="sticky top-0 z-40 bg-[#09090b]/95 backdrop-blur-xl border-b border-white/[0.08] px-3 sm:px-6 py-2.5 flex items-center justify-between">
+      {/* Studio Top Navbar Minimalista e 100% Responsivo */}
+      <header className="sticky top-0 z-40 bg-[#09090b]/95 backdrop-blur-xl border-b border-white/[0.08] px-2.5 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between gap-2">
         {/* Brand & Studio Title */}
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-700/80 flex items-center justify-center text-white shrink-0 shadow-sm">
-            <Film className="w-4 h-4 text-zinc-200" />
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-zinc-900 border border-zinc-700/80 flex items-center justify-center text-white shrink-0 shadow-sm">
+            <Film className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-zinc-200" />
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className="flex flex-col">
-              <span className="text-xs font-mono font-bold tracking-wider text-zinc-100 flex items-center gap-1.5">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="flex flex-col min-w-0">
+              <span className="text-[11px] sm:text-xs font-mono font-bold tracking-wider text-zinc-100 truncate">
                 SHOWREEL // STUDIO
               </span>
-              <span className="text-[10px] font-mono text-zinc-500">
+              <span className="text-[9px] sm:text-[10px] font-mono text-zinc-500 hidden sm:inline">
                 1080×1920 (9:16) · 60 FPS
               </span>
             </div>
 
             <button
               onClick={() => setIsSettingsOpen(true)}
-              className="text-[10px] font-mono px-2 py-0.5 rounded-md border border-white/[0.08] bg-zinc-900 text-zinc-400 hover:text-zinc-200 font-medium flex items-center gap-1 transition-all"
+              className="hidden md:flex text-[10px] font-mono px-2 py-0.5 rounded-md border border-white/[0.08] bg-zinc-900 text-zinc-400 hover:text-zinc-200 font-medium items-center gap-1 transition-all shrink-0"
               title="Configurar IA e modelo"
             >
               <Brain className="w-3 h-3 text-zinc-400" />
@@ -681,15 +681,15 @@ export default function App() {
           </div>
         </div>
 
-        {/* Primary Studio Actions */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
+        {/* Primary Studio Actions - Compacto e sem quebra em mobile */}
+        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           {/* Quick Non-Repeating Random Generation Button */}
           <button
             onClick={handleGenerateRandomShowreel}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-white text-zinc-950 text-xs font-mono font-semibold transition-all active:scale-95 shadow-sm"
+            className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-white text-zinc-950 text-[11px] sm:text-xs font-mono font-semibold transition-all active:scale-95 shadow-sm shrink-0"
             title="Gera variações de animação aleatórias sem repetir, de acordo com o roteiro da cena"
           >
-            <Shuffle className="w-3.5 h-3.5 text-zinc-950" />
+            <Shuffle className="w-3.5 h-3.5 text-zinc-950 shrink-0" />
             <span className="hidden sm:inline">Variação Sem Repetir</span>
             <span className="sm:hidden">Sortear</span>
           </button>
@@ -697,10 +697,10 @@ export default function App() {
           {/* Scene Verification Auditor Trigger */}
           <button
             onClick={() => setIsVerificationModalOpen(true)}
-            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-white/[0.08] text-xs font-mono font-medium transition-all active:scale-95"
+            className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-white/[0.08] text-[11px] sm:text-xs font-mono font-medium transition-all active:scale-95 shrink-0"
             title="Central de Auditoria de Cenas"
           >
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
             <span className="hidden md:inline">Auditoria</span>
             <span className="text-[10px] text-emerald-400 font-bold tabular-nums">
               {showreel?.verificationReport?.overallScore || 100}%
@@ -711,7 +711,7 @@ export default function App() {
           <button
             onClick={handleExportVideo}
             disabled={isExporting || !showreel}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-white/[0.08] font-mono text-xs transition-all active:scale-95 disabled:opacity-50"
+            className="flex items-center gap-1.5 p-1.5 sm:px-3 sm:py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-white/[0.08] font-mono text-xs transition-all active:scale-95 disabled:opacity-50 shrink-0"
             title="Exportar vídeo HD do Canvas (1080x1920)"
           >
             <Download className="w-3.5 h-3.5 text-zinc-400" />
@@ -721,7 +721,7 @@ export default function App() {
           {/* Settings Modal */}
           <button
             onClick={() => setIsSettingsOpen(true)}
-            className="p-1.5 sm:p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/[0.08] transition-all relative"
+            className="p-1.5 sm:p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/[0.08] transition-all relative shrink-0"
             title="Configurações (API Keys, Duração, FPS)"
           >
             <Settings className="w-4 h-4" />
@@ -732,14 +732,14 @@ export default function App() {
         </div>
       </header>
 
-      {/* Mobile Top View Switcher (< lg screens) */}
-      <div className="lg:hidden sticky top-[51px] z-30 bg-[#0d0e15]/95 backdrop-blur-md border-b border-zinc-800/80 px-3 py-2 flex items-center justify-center">
-        <div className="grid grid-cols-2 w-full max-w-xs bg-zinc-900/90 p-1 rounded-xl border border-zinc-800 text-xs font-mono">
+      {/* Mobile Top View Switcher (< lg screens) no tema minimalista obsidiana */}
+      <div className="lg:hidden sticky top-[45px] sm:top-[51px] z-30 bg-[#09090b]/95 backdrop-blur-md border-b border-white/[0.08] px-3 py-1.5 flex items-center justify-center">
+        <div className="grid grid-cols-2 w-full max-w-xs bg-zinc-900/90 p-0.5 rounded-lg border border-white/[0.08] text-xs font-mono">
           <button
             onClick={() => setMobileView('preview')}
-            className={`py-1.5 px-2 rounded-lg flex items-center justify-center gap-1.5 transition-all ${
+            className={`py-1.5 px-2 rounded-md flex items-center justify-center gap-1.5 transition-all ${
               mobileView === 'preview'
-                ? 'bg-cyan-500 text-black font-bold shadow-md'
+                ? 'bg-zinc-800 text-white font-semibold shadow-xs'
                 : 'text-zinc-400 hover:text-zinc-200'
             }`}
           >
@@ -749,9 +749,9 @@ export default function App() {
 
           <button
             onClick={() => setMobileView('studio')}
-            className={`py-1.5 px-2 rounded-lg flex items-center justify-center gap-1.5 transition-all ${
+            className={`py-1.5 px-2 rounded-md flex items-center justify-center gap-1.5 transition-all ${
               mobileView === 'studio'
-                ? 'bg-cyan-500 text-black font-bold shadow-md'
+                ? 'bg-zinc-800 text-white font-semibold shadow-xs'
                 : 'text-zinc-400 hover:text-zinc-200'
             }`}
           >
@@ -762,10 +762,10 @@ export default function App() {
       </div>
 
       {/* Main Studio Workspace */}
-      <main className="flex-1 w-full max-w-[1600px] mx-auto p-3 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-5 lg:gap-6 items-start">
+      <main className="flex-1 w-full max-w-[1600px] mx-auto p-2 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-2.5 sm:gap-5 lg:gap-6 items-start">
         {/* Left Studio Inspector Dock */}
         <aside
-          className={`w-full lg:w-[410px] xl:w-[440px] shrink-0 flex flex-col gap-3.5 ${
+          className={`w-full lg:w-[410px] xl:w-[440px] shrink-0 flex flex-col gap-3 sm:gap-3.5 ${
             mobileView === 'studio' ? 'flex' : 'hidden lg:flex'
           }`}
         >
@@ -1159,7 +1159,7 @@ export default function App() {
 
         {/* Center / Right Stage (Player & Timeline) */}
         <section
-          className={`flex-1 flex flex-col items-center gap-4 w-full min-w-0 ${
+          className={`flex-1 flex flex-col items-center gap-2 sm:gap-4 w-full min-w-0 ${
             mobileView === 'preview' ? 'flex' : 'hidden lg:flex'
           }`}
         >

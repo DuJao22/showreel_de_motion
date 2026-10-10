@@ -290,7 +290,7 @@ export const CanvasPreview: React.FC<CanvasPreviewProps> = ({
               : 'perspective(1200px) rotateY(0deg) rotateX(0deg)',
           transition: isHoveredRef.current ? 'transform 0.08s ease-out' : 'transform 0.5s ease-out',
         }}
-        className="relative overflow-hidden rounded-xl bg-black shadow-2xl border border-white/[0.08] w-auto h-[44vh] sm:h-[50vh] md:h-[56vh] lg:h-[60vh] max-h-[580px] aspect-[9/16] flex items-center justify-center cursor-crosshair group"
+        className="relative overflow-hidden rounded-xl bg-black shadow-2xl border border-white/[0.08] w-auto h-[46dvh] xs:h-[48dvh] sm:h-[52dvh] md:h-[56dvh] lg:h-[60dvh] max-h-[580px] aspect-[9/16] flex items-center justify-center cursor-crosshair group shrink-0"
       >
         {/* The 1080x1920 Physical Canvas */}
         <canvas
@@ -302,24 +302,24 @@ export const CanvasPreview: React.FC<CanvasPreviewProps> = ({
           title="Clique para reproduzir / pausar (Mova o cursor para Parallax 2.5D)"
         />
 
-        {/* Minimalist Top HUD Overlay in Canvas */}
-        <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between pointer-events-none z-20">
+        {/* Minimalist Top HUD Overlay in Canvas - 100% responsivo sem estouro em mobile */}
+        <div className="absolute top-2 inset-x-2 sm:top-2.5 sm:inset-x-2.5 flex items-center justify-between pointer-events-none z-20 gap-1">
           {/* Metadata */}
-          <div className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-300 bg-black/80 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
+          <div className="flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-mono text-zinc-300 bg-black/85 backdrop-blur-md px-1.5 sm:px-2 py-0.5 rounded border border-white/10 shrink-0">
             <span className="font-bold text-white uppercase tracking-wider">
               {currentScene?.role || 'cena'}
             </span>
-            <span className="text-zinc-600" aria-hidden="true">·</span>
-            <span className="text-zinc-400 tabular-nums">{showreel?.dna.bpm || 120} BPM</span>
             <span className="text-zinc-600 hidden sm:inline" aria-hidden="true">·</span>
-            <span className="text-emerald-400 tabular-nums hidden sm:inline">{fps} FPS</span>
+            <span className="text-zinc-400 tabular-nums hidden sm:inline">{showreel?.dna.bpm || 120} BPM</span>
+            <span className="text-zinc-600 hidden md:inline" aria-hidden="true">·</span>
+            <span className="text-emerald-400 tabular-nums hidden md:inline">{fps} FPS</span>
           </div>
 
-          <div className="flex items-center gap-1 pointer-events-auto">
+          <div className="flex items-center gap-1 pointer-events-auto shrink-0">
             {/* Toggle Parallax 2.5D */}
             <button
               onClick={() => setParallaxEnabled((prev) => !prev)}
-              className={`p-1.5 px-2 rounded-lg text-xs backdrop-blur-md transition-all flex items-center gap-1.5 font-mono ${
+              className={`p-1 sm:p-1.5 sm:px-2 rounded-md sm:rounded-lg text-xs backdrop-blur-md transition-all flex items-center gap-1 font-mono ${
                 parallaxEnabled
                   ? 'bg-zinc-900/90 text-cyan-300 border border-cyan-500/40 shadow-sm'
                   : 'bg-black/75 text-zinc-400 border border-white/10 hover:text-white'
@@ -332,9 +332,10 @@ export const CanvasPreview: React.FC<CanvasPreviewProps> = ({
               </span>
             </button>
 
+            {/* Filtro Cinematográfico */}
             <button
               onClick={handleCycleFilterPreset}
-              className={`p-1.5 px-2 rounded-lg text-xs backdrop-blur-md transition-all flex items-center gap-1.5 font-mono ${
+              className={`p-1 sm:p-1.5 sm:px-2 rounded-md sm:rounded-lg text-xs backdrop-blur-md transition-all flex items-center gap-1 font-mono ${
                 cinematicFilters.enabled
                   ? 'bg-zinc-900/90 text-amber-300 border border-amber-500/40 shadow-sm'
                   : 'bg-black/75 text-zinc-400 border border-white/10 hover:text-white'
@@ -347,9 +348,10 @@ export const CanvasPreview: React.FC<CanvasPreviewProps> = ({
               </span>
             </button>
 
+            {/* Áreas de Segurança (stories/reels) */}
             <button
               onClick={onToggleSafeAreas}
-              className={`p-1.5 rounded-lg text-xs backdrop-blur-md transition-all ${
+              className={`p-1 sm:p-1.5 rounded-md sm:rounded-lg text-xs backdrop-blur-md transition-all hidden xs:flex ${
                 showSafeAreas
                   ? 'bg-rose-950/80 text-rose-300 border border-rose-500/50'
                   : 'bg-black/75 text-zinc-400 border border-white/10 hover:text-white'
@@ -359,19 +361,21 @@ export const CanvasPreview: React.FC<CanvasPreviewProps> = ({
               {showSafeAreas ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
             </button>
 
+            {/* Capturar Snapshot */}
             {onTakeSnapshot && (
               <button
                 onClick={onTakeSnapshot}
-                className="p-1.5 rounded-lg text-xs bg-black/75 text-zinc-400 border border-white/10 hover:text-white backdrop-blur-md transition-all hover:bg-zinc-800"
+                className="p-1 sm:p-1.5 rounded-md sm:rounded-lg text-xs bg-black/75 text-zinc-400 border border-white/10 hover:text-white backdrop-blur-md transition-all hover:bg-zinc-800 hidden sm:flex"
                 title="Capturar Foto do Frame Atual (1080x1920 PNG)"
               >
                 <Camera className="w-3.5 h-3.5 text-cyan-400" />
               </button>
             )}
 
+            {/* Tela cheia */}
             <button
               onClick={toggleFullscreen}
-              className="p-1.5 rounded-lg text-xs bg-black/75 text-zinc-400 border border-white/10 hover:text-white backdrop-blur-md transition-all"
+              className="p-1 sm:p-1.5 rounded-md sm:rounded-lg text-xs bg-black/75 text-zinc-400 border border-white/10 hover:text-white backdrop-blur-md transition-all"
               title="Tela cheia"
             >
               {isFullscreen ? (
