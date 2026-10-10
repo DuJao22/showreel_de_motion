@@ -1,0 +1,8 @@
+{
+  "name": "Remix Motion Showreel Agent v2",
+  "description": "Diretor mestre de motion design com mais de 50 anos de experiência cinematográfica, sorteio estocástico de DNA visual, geração via Gemini e renderizador Canvas 9:16 de alta performance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
